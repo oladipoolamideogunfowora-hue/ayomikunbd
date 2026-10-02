@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8743b"/>
+      <stop offset="100%" stop-color="#d94523"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff176"/>
+      <stop offset="100%" stop-color="#ff9800"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  
+  <!-- Cake Base -->
+  <rect x="14" y="38" width="36" height="15" rx="3" fill="#fdfbf7"/>
+  <!-- Cake Top Layer -->
+  <rect x="18" y="27" width="28" height="11" rx="2" fill="#fff7ed"/>
+  
+  <!-- Frosting swirls / decoration -->
+  <path d="M14 38 Q18 43 23 38 Q28 43 32 38 Q37 43 41 38 Q46 43 50 38" fill="none" stroke="#d94523" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M18 27 Q22 31 25 27 Q29 31 32 27 Q36 31 39 27 Q43 31 46 27" fill="none" stroke="#d94523" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Candle -->
+  <rect x="30" y="16" width="4" height="11" rx="1.5" fill="#facc15"/>
+  <!-- Candle stripes -->
+  <line x1="30" y1="19" x2="34" y2="21" stroke="#ef4444" stroke-width="1.2"/>
+  <line x1="30" y1="23" x2="34" y2="25" stroke="#ef4444" stroke-width="1.2"/>
+
+  <!-- Candle Flame -->
+  <path d="M32 8 C33.5 11 35 13 32 15 C29 13 30.5 11 32 8 Z" fill="url(#flame)"/>
+
+  <!-- Sparkles -->
+  <circle cx="12" cy="18" r="1.5" fill="#fef08a"/>
+  <circle cx="51" cy="20" r="1.5" fill="#fef08a"/>
+  <circle cx="48" cy="12" r="1" fill="#ffffff"/>
+  <circle cx="15" cy="10" r="1" fill="#ffffff"/>
+</svg>

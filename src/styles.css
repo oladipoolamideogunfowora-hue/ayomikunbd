@@ -1,0 +1,186 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ink: var(--ink);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --font-script: "Ephesis", cursive;
+  --font-display: "Archivo Black", sans-serif;
+  --font-sans: "Barlow", sans-serif;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(0.948 0.019 85);
+  --foreground: oklch(0.24 0.02 45);
+  --ink: oklch(0.24 0.02 45);
+  --brand: oklch(0.58 0.2 32);
+  --brand-deep: oklch(0.46 0.17 32);
+  --card: oklch(0.97 0.012 85);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.97 0.012 85);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.58 0.2 32);
+  --primary-foreground: oklch(0.97 0.012 85);
+  --secondary: oklch(0.91 0.02 78);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.91 0.02 78);
+  --muted-foreground: oklch(0.5 0.02 60);
+  --accent: oklch(0.88 0.05 60);
+  --accent-foreground: var(--foreground);
+  --destructive: oklch(0.55 0.21 27);
+  --destructive-foreground: oklch(0.97 0.012 85);
+  --border: oklch(0.86 0.02 70);
+  --input: oklch(0.86 0.02 70);
+  --ring: oklch(0.58 0.2 32);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+}
+
+@utility paper {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(
+      circle at 70% 10%,
+      color-mix(in oklab, var(--brand) 14%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(circle at 10% 90%, oklch(0.88 0.05 60 / 0.5), transparent 60%);
+
+  &::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.22;
+    background-image: radial-gradient(oklch(0.24 0.02 45 / 0.5) 0.5px, transparent 0.6px);
+    background-size: 3px 3px;
+  }
+}
+
+@utility script {
+  font-family: var(--font-script);
+  line-height: 0.9;
+}
+
+@utility stacked {
+  font-family: var(--font-display);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  color: var(--brand);
+  text-shadow:
+    2px 2px 0 color-mix(in oklab, var(--brand-deep) 55%, transparent),
+    5px 5px 0 oklch(0.24 0.02 45 / 0.12);
+}
+
+@utility watermark {
+  font-family: var(--font-script);
+  font-size: 12rem;
+  line-height: 1;
+  color: oklch(0.24 0.02 45 / 0.06);
+  white-space: nowrap;
+}
+
+@utility edge-text {
+  transform: rotate(-90deg);
+  transform-origin: left bottom;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: oklch(0.24 0.02 45 / 0.25);
+}
+
+@utility photo-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  box-shadow:
+    0 18px 40px -18px oklch(0.24 0.02 45 / 0.55),
+    0 0 0 6px oklch(0.97 0.012 85 / 0.9);
+}
+
+@utility halftone {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.3;
+  background-image: radial-gradient(oklch(0.24 0.02 45 / 0.55) 0.7px, transparent 0.8px);
+  background-size: 3.5px 3.5px;
+}
+
+@utility vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    oklch(0.2 0.02 45 / 0.45) 100%
+  );
+}
+
+@utility stamp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2.4rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+  color: oklch(0.98 0.012 85);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 22px -10px color-mix(in oklab, var(--brand) 80%, transparent);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px) rotate(-1deg);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
