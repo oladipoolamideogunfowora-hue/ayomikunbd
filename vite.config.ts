@@ -12,7 +12,8 @@ export default defineConfig({
     tanstackStart({
       prerender: {
         enabled: true,
-        autoStaticPathsDiscovery: true,
+        routes: ["/"],
+        crawlLinks: true,
       },
     }),
     netlify(),
