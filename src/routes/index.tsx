@@ -14,16 +14,16 @@ const card5 = { url: "/assets/card5.jpg" };
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Happy Birthday, Ayomikun ❤️" },
+      { title: "Happy Birthday, Ayomikun 🎉" },
       {
         name: "description",
         content:
-          "A special interactive birthday letter and flip-through memory card for Ayomikun with all my love.",
+          "A special interactive birthday letter and flip-through memory card for Ayomikun.",
       },
-      { property: "og:title", content: "Happy Birthday, Ayomikun ❤️" },
+      { property: "og:title", content: "Happy Birthday, Ayomikun 🎉" },
       {
         property: "og:description",
-        content: "A special birthday love letter and photo cards for Ayomikun.",
+        content: "A special birthday letter and photo cards for Ayomikun.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -256,7 +256,7 @@ function Index() {
                   className="relative z-10 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-deep shadow-lg ring-4 ring-card transition-shadow group-hover:shadow-brand/40"
                 >
                   <div className="flex flex-col items-center justify-center text-center">
-                    <Heart className="h-5 w-5 fill-current text-white/95" />
+                    <Sparkles className="h-5 w-5 text-white/95" />
                     <span className="font-display text-[0.68rem] tracking-wider text-white">
                       OPEN
                     </span>
@@ -272,13 +272,13 @@ function Index() {
                   <Sparkles className="h-3 w-3 animate-pulse" />
                 </p>
                 <p className="mt-1 text-[0.6rem] font-medium text-ink/60">
-                  A personalized love letter awaits inside 💌
+                  A personalized birthday letter awaits inside 💌
                 </p>
               </div>
             </motion.div>
           )}
 
-          {/* ================= STAGE 2: ROMANTIC LETTER ================= */}
+          {/* ================= STAGE 2: CELEBRATION LETTER ================= */}
           {view === "letter" && (
             <motion.div
               key="letter"
@@ -289,48 +289,38 @@ function Index() {
               className="flex w-full flex-col items-center"
             >
               <div className="flex items-end justify-center gap-2">
-                <span className="script -mb-2 text-4xl text-ink">To My Dearest</span>
-                <span className="stacked text-5xl">AYOOO ❤️</span>
+                <span className="script -mb-2 text-4xl text-ink">To The One and Only</span>
+                <span className="stacked text-5xl">AYOOO 🎉</span>
               </div>
 
-              {/* Romantic Letter Card */}
+              {/* Celebration Birthday Letter Card */}
               <div className="relative mt-5 w-full rounded-2xl border-2 border-brand/20 bg-card/95 p-6 shadow-xl backdrop-blur-sm">
                 <div className="absolute right-4 top-4 opacity-15">
-                  <Heart className="h-12 w-12 text-brand fill-current" />
+                  <Sparkles className="h-12 w-12 text-brand" />
                 </div>
 
                 <div className="space-y-3.5 text-left text-[0.92rem] font-medium leading-relaxed text-ink">
                   <p>
-                    From the very first moment you walked into my life, you brought a warmth and
-                    brightness that words could never fully explain.
+                    Happy Birthday, AYOOO! 🎉
                   </p>
                   <p>
-                    Your laugh is hands-down my favorite sound in the world, your smile lights up
-                    everything around you, and having you by my side makes every single day feel
-                    sweeter, richer, and deeply blessed.
+                    Today is all about celebrating you — one of the most genuine, radiant, and amazing people I know!
                   </p>
                   <p>
-                    On this special day, I celebrate not just the beautiful day you were born, but
-                    the radiant, kind, and absolutely incredible woman you are. Thank you for your
-                    sweet soul, the peace you bring to my heart, and every memory we share.
+                    Your laughter is contagious, your energy lights up any room, and you have this incredible way of bringing good vibes and joy everywhere you go. Having you as a friend is a true blessing, and I don't take it for granted at all. (Plus, you already know you make the best food and have the biggest heart!)
                   </p>
                   <p>
-                    My biggest prayer for you in this new chapter is that God grants the deepest
-                    desires of your heart, surrounds you with unmatched joy, and opens doors of
-                    greatness that no one can shut. You deserve the absolute best this world has to
-                    offer.
+                    As you step into this new year of life, my prayer for you is that God grants you massive wins, peace of mind, good health, and opens doors of greatness that no one can shut. May every good thing you desire come running to you!
                   </p>
                   <p className="font-semibold text-brand">
-                    Happy Birthday, my sweet Ayooo. I'm so lucky to celebrate you today, and I will
-                    always be right here cheering you on, holding you close, and loving you through
-                    it all.
+                    Never stop shining, having fun, and being the superstar that you are. Enjoy every single moment of your day today — you deserve all the celebration coming your way! ✨
                   </p>
                 </div>
 
                 <div className="mt-5 border-t border-brand/15 pt-4 text-right">
-                  <p className="script text-3xl text-brand">Forever yours,</p>
+                  <p className="script text-3xl text-brand">Always in your corner,</p>
                   <p className="text-[0.7rem] font-bold uppercase tracking-[0.25em] text-ink/70">
-                    With all my heart ❤️
+                    YOUR BIGGEST CHEERLEADER ✨
                   </p>
                 </div>
               </div>
@@ -344,7 +334,7 @@ function Index() {
                   ← Envelope
                 </button>
                 <button onClick={handleGoToCards} className="stamp-btn">
-                  See Our Memories 📸 ➔
+                  See The Memories 📸 ➔
                 </button>
               </div>
             </motion.div>
