@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import confetti from "canvas-confetti";
-import { Music, VolumeX } from "lucide-react";
+import { Music, VolumeX, Mail, Heart, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 
 const themeSong = { url: "/assets/birthday-song.mp3" };
 const card1 = { url: "/assets/card1.jpg" };
@@ -14,16 +14,16 @@ const card5 = { url: "/assets/card5.jpg" };
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Happy Birthday, Ayomikun" },
+      { title: "Happy Birthday, Ayomikun ❤️" },
       {
         name: "description",
         content:
-          "A little flip-through birthday card for Ayomikun — five photos, five messages, one very happy new year of life.",
+          "A special interactive birthday letter and flip-through memory card for Ayomikun with all my love.",
       },
-      { property: "og:title", content: "Happy Birthday, Ayomikun" },
+      { property: "og:title", content: "Happy Birthday, Ayomikun ❤️" },
       {
         property: "og:description",
-        content: "Five photos, five messages, one very happy new year of life.",
+        content: "A special birthday love letter and photo cards for Ayomikun.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -70,10 +70,14 @@ const cards = [
   },
 ];
 
+type ScreenView = "envelope" | "letter" | "cards";
+
 function Index() {
+  const [view, setView] = useState<ScreenView>("envelope");
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
   const card = cards[index]!;
   const isLast = index === cards.length - 1;
 
@@ -126,6 +130,28 @@ function Index() {
     }
   };
 
+  const handleOpenEnvelope = () => {
+    if (!playing) {
+      fadeIn();
+      setPlaying(true);
+    }
+    confetti({
+      particleCount: 110,
+      spread: 80,
+      origin: { y: 0.6 },
+      colors: ["#d94523", "#e8743b", "#f59e0b", "#f4ece1"],
+    });
+    setView("letter");
+  };
+
+  const handleGoToCards = () => {
+    if (!playing) {
+      fadeIn();
+      setPlaying(true);
+    }
+    setView("cards");
+  };
+
   const handleNext = () => {
     if (!playing) {
       fadeIn();
@@ -143,8 +169,16 @@ function Index() {
     setIndex((i) => i + 1);
   };
 
+  const handlePrev = () => {
+    if (index === 0) {
+      setView("letter");
+    } else {
+      setIndex((i) => i - 1);
+    }
+  };
+
   return (
-    <main className="paper relative flex min-h-screen flex-col items-center overflow-hidden px-5 py-8">
+    <main className="paper relative flex min-h-screen flex-col items-center justify-between overflow-hidden px-5 py-8">
       <span className="watermark pointer-events-none absolute -left-6 top-24 select-none">
         Happy
       </span>
@@ -152,62 +186,236 @@ function Index() {
         FOR AYOMIKUN · WITH LOVE
       </span>
 
-      <p className="relative z-10 text-center text-[0.62rem] font-semibold uppercase tracking-[0.34em] text-ink/80">
-        Wishing you the best of the best
-      </p>
-      <p className="relative z-10 mt-1 text-center text-[0.55rem] font-bold uppercase tracking-[0.22em] text-ink/60">
-        in this new year of your life
-      </p>
+      {/* Top Header */}
+      <div className="relative z-10 w-full max-w-sm text-center">
+        <p className="text-[0.62rem] font-semibold uppercase tracking-[0.34em] text-ink/80">
+          Wishing you the best of the best
+        </p>
+        <p className="mt-1 text-[0.55rem] font-bold uppercase tracking-[0.22em] text-ink/60">
+          in this new year of your life
+        </p>
+      </div>
 
-      <div className="relative z-10 mt-6 w-full max-w-sm">
+      {/* Main Interactive Stage */}
+      <div className="relative z-10 my-auto flex w-full max-w-sm flex-col items-center py-4">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
-            className="flex flex-col items-center"
-          >
-            <div className="flex items-end justify-center gap-2">
-              <span className="script -mb-3 text-4xl text-ink">{card.script}</span>
-              <span className="stacked text-5xl">{card.headline}</span>
-            </div>
+          {/* ================= STAGE 1: CLOSED ENVELOPE ================= */}
+          {view === "envelope" && (
+            <motion.div
+              key="envelope"
+              initial={{ opacity: 0, scale: 0.94, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: -15 }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
+              className="flex w-full flex-col items-center"
+            >
+              <div className="mb-4 text-center">
+                <span className="script text-3xl text-ink">Special Delivery</span>
+                <h1 className="stacked text-4xl mt-1">FOR AYOOO</h1>
+              </div>
 
-            <div className="photo-frame mt-5 w-full">
-              <motion.img
-                src={card.image}
-                alt={`Memory ${index + 1} of Ayomikun`}
-                initial={{ scale: 1.12 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 6, ease: "easeOut" }}
-                className="aspect-[4/5] w-full object-cover object-center sepia-[.3] contrast-[1.1] saturate-[.95]"
-              />
-              <span className="vignette" aria-hidden="true" />
-              <span className="halftone" aria-hidden="true" />
-            </div>
+              {/* The Envelope */}
+              <div
+                onClick={handleOpenEnvelope}
+                className="group relative flex h-60 w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-brand/30 bg-card/95 p-6 shadow-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-brand/20 hover:border-brand/60"
+              >
+                {/* Envelope Flap Lines */}
+                <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+                  {/* Diagonal top flap crease */}
+                  <svg
+                    viewBox="0 0 340 240"
+                    fill="none"
+                    className="absolute inset-0 h-full w-full opacity-35"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M0 0 L170 125 L340 0"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      className="text-brand"
+                    />
+                    <path
+                      d="M0 240 L125 105"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className="text-brand/50"
+                    />
+                    <path
+                      d="M340 240 L215 105"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className="text-brand/50"
+                    />
+                  </svg>
+                </div>
 
-            <p className="mt-5 max-w-[19rem] text-center text-[0.95rem] font-semibold leading-relaxed text-ink">
-              {card.message}
-            </p>
-          </motion.div>
+                {/* Wax Seal Button */}
+                <motion.div
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative z-10 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-deep shadow-lg ring-4 ring-card transition-shadow group-hover:shadow-brand/40"
+                >
+                  <div className="flex flex-col items-center justify-center text-center">
+                    <Heart className="h-5 w-5 fill-current text-white/95" />
+                    <span className="font-display text-[0.68rem] tracking-wider text-white">
+                      OPEN
+                    </span>
+                  </div>
+                  {/* Subtle seal rim decoration */}
+                  <div className="pointer-events-none absolute inset-1.5 rounded-full border border-dashed border-white/40" />
+                </motion.div>
+
+                {/* Delivery Prompt */}
+                <p className="relative z-10 mt-5 flex items-center gap-1.5 text-center text-[0.72rem] font-bold uppercase tracking-[0.22em] text-brand transition-colors group-hover:text-brand-deep">
+                  <Sparkles className="h-3 w-3 animate-pulse" />
+                  Tap wax seal to open your letter
+                  <Sparkles className="h-3 w-3 animate-pulse" />
+                </p>
+                <p className="mt-1 text-[0.6rem] font-medium text-ink/60">
+                  A personalized love letter awaits inside 💌
+                </p>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ================= STAGE 2: ROMANTIC LETTER ================= */}
+          {view === "letter" && (
+            <motion.div
+              key="letter"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
+              className="flex w-full flex-col items-center"
+            >
+              <div className="flex items-end justify-center gap-2">
+                <span className="script -mb-2 text-4xl text-ink">To My Dearest</span>
+                <span className="stacked text-5xl">AYOOO ❤️</span>
+              </div>
+
+              {/* Romantic Letter Card */}
+              <div className="relative mt-5 w-full rounded-2xl border-2 border-brand/20 bg-card/95 p-6 shadow-xl backdrop-blur-sm">
+                <div className="absolute right-4 top-4 opacity-15">
+                  <Heart className="h-12 w-12 text-brand fill-current" />
+                </div>
+
+                <div className="space-y-3.5 text-left text-[0.92rem] font-medium leading-relaxed text-ink">
+                  <p>
+                    From the very first moment you walked into my life, you brought a warmth and
+                    brightness that words could never fully explain.
+                  </p>
+                  <p>
+                    Your laugh is hands-down my favorite sound in the world, your smile lights up
+                    everything around you, and having you by my side makes every single day feel
+                    sweeter, richer, and deeply blessed.
+                  </p>
+                  <p>
+                    On this special day, I celebrate not just the beautiful day you were born, but
+                    the radiant, kind, and absolutely incredible woman you are. Thank you for your
+                    sweet soul, the peace you bring to my heart, and every memory we share.
+                  </p>
+                  <p>
+                    My biggest prayer for you in this new chapter is that God grants the deepest
+                    desires of your heart, surrounds you with unmatched joy, and opens doors of
+                    greatness that no one can shut. You deserve the absolute best this world has to
+                    offer.
+                  </p>
+                  <p className="font-semibold text-brand">
+                    Happy Birthday, my sweet Ayooo. I'm so lucky to celebrate you today, and I will
+                    always be right here cheering you on, holding you close, and loving you through
+                    it all.
+                  </p>
+                </div>
+
+                <div className="mt-5 border-t border-brand/15 pt-4 text-right">
+                  <p className="script text-3xl text-brand">Forever yours,</p>
+                  <p className="text-[0.7rem] font-bold uppercase tracking-[0.25em] text-ink/70">
+                    With all my heart ❤️
+                  </p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                <button
+                  onClick={() => setView("envelope")}
+                  className="stamp-btn-outline"
+                >
+                  ← Envelope
+                </button>
+                <button onClick={handleGoToCards} className="stamp-btn">
+                  See Our Memories 📸 ➔
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ================= STAGE 3: PHOTO CARDS ================= */}
+          {view === "cards" && (
+            <motion.div
+              key={`card-${index}`}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
+              className="flex w-full flex-col items-center"
+            >
+              <div className="flex items-end justify-center gap-2">
+                <span className="script -mb-3 text-4xl text-ink">{card.script}</span>
+                <span className="stacked text-5xl">{card.headline}</span>
+              </div>
+
+              <div className="photo-frame mt-5 w-full">
+                <motion.img
+                  src={card.image}
+                  alt={`Memory ${index + 1} of Ayomikun`}
+                  initial={{ scale: 1.12 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 6, ease: "easeOut" }}
+                  className="aspect-[4/5] w-full object-cover object-center sepia-[.3] contrast-[1.1] saturate-[.95]"
+                />
+                <span className="vignette" aria-hidden="true" />
+                <span className="halftone" aria-hidden="true" />
+              </div>
+
+              <p className="mt-5 max-w-[19rem] text-center text-[0.95rem] font-semibold leading-relaxed text-ink">
+                {card.message}
+              </p>
+
+              {/* Navigation Controls: Back & Forth */}
+              <div className="mt-7 flex flex-col items-center gap-4 w-full">
+                <div className="flex items-center justify-center gap-3">
+                  <button onClick={handlePrev} className="stamp-btn-outline">
+                    {index === 0 ? "← Letter 💌" : "← Prev"}
+                  </button>
+                  <button onClick={handleNext} className="stamp-btn">
+                    {isLast ? "Finish 🎉" : "Next ➔"}
+                  </button>
+                </div>
+
+                {/* Progress Dots (Clickable for quick jumping) */}
+                <div className="flex items-center gap-2">
+                  {cards.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setIndex(i)}
+                      aria-label={`Go to photo ${i + 1}`}
+                      className={`h-2 rounded-full transition-all ${
+                        i === index
+                          ? "w-7 bg-brand shadow-sm shadow-brand/40"
+                          : "w-2 bg-ink/25 hover:bg-ink/40"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
 
-      <div className="relative z-10 mt-7 flex flex-col items-center gap-4 pb-10">
-        <button onClick={handleNext} className="stamp-btn">
-          {isLast ? "Finish 🎉" : "Next ➔"}
-        </button>
-        <div className="flex gap-2">
-          {cards.map((_, i) => (
-            <span
-              key={i}
-              className={`h-1.5 rounded-full transition-all ${
-                i === index ? "w-6 bg-brand" : "w-1.5 bg-ink/25"
-              }`}
-            />
-          ))}
-        </div>
+      {/* Bottom Controls & Footer */}
+      <div className="relative z-10 flex flex-col items-center gap-3 pb-4">
         <button
           onClick={toggleMusic}
           className="flex items-center gap-2 rounded-full border border-ink/25 px-4 py-1.5 text-[0.6rem] font-bold uppercase tracking-[0.25em] text-ink/70 transition-colors hover:bg-ink/5"
@@ -216,6 +424,7 @@ function Index() {
           {playing ? <Music className="h-3 w-3" /> : <VolumeX className="h-3 w-3" />}
           {playing ? "Music on" : "Play music"}
         </button>
+
         <a
           href={`https://wa.me/2348121146922?text=${encodeURIComponent(
             "Hi! I just went through the birthday card you made for Ayomikun — it's beautiful 💛 Please recreate one like this for my loved ones!",
@@ -230,6 +439,7 @@ function Index() {
           </svg>
           Recreate this for a loved one
         </a>
+
         <p className="text-[0.6rem] font-bold uppercase tracking-[0.3em] text-ink/40">
           @ladoblow
         </p>
